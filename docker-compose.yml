@@ -1,0 +1,17 @@
+version: '3'
+services:
+ app:
+    build: .
+    depends_on:
+      - couchbase
+ couchbase:
+    image: couchbase/server:latest
+    ports:
+      - "8091:8091"
+      - "8092:8092"
+      - "8093:8093"
+      - "11210:11210"
+    volumes:
+      - couchbase-data:/opt/couchbase/var
+volumes:
+ couchbase-data:
