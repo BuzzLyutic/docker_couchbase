@@ -1,17 +1,20 @@
-version: '3'
+version: '3.7'
+
 services:
- app:
-    build: .
-    depends_on:
-      - couchbase
  couchbase:
-    image: couchbase/server:latest
+    build: .
     ports:
       - "8091:8091"
       - "8092:8092"
       - "8093:8093"
+      - "8094:8094"
       - "11210:11210"
-    volumes:
-      - couchbase-data:/opt/couchbase/var
-volumes:
- couchbase-data:
+
+ app:
+    build: ../app
+    depends_on:
+      - couchbase
+    environment:
+      - COUCHBASE_URL=couchbase://couchbase:8091
+    ports:
+      - "5000:5000"
